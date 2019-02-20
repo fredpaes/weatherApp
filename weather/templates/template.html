@@ -1,76 +1,103 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Weather</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+    <title>Weather App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
 </head>
 
 <body>
-    <section class="hero is-primary">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">
-                    ¿Cómo está el clima?
-                </h1>
-            </div>
+    <nav>
+        <div>
+            <a href="/" class="brand-logo center">WEATHER</a>
         </div>
-    </section>
-    <section class="section">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-offset-4 is-4">
-                    <form method="POST">
-                        {% csrf_token %}
-                        <div class="field has-addons">
-                            <div class="control is-expanded">
-                                {{ form.name }}
-                            </div>
-                            <div class="control">
-                                <button type="submit" class="button is-info">
-                                    Agregar ciudad
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="section">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-offset-4 is-4">
-                    {% for city_weather in weather_data %}
-                    <div class="box">
-                        <article class="media">
-                            <div class="media-left">
-                                <figure class="image is-50x50">
-                                    <img src="http://openweathermap.org/img/w/{{ city_weather.icon }}.png" alt="Image">
-                                </figure>
-                            </div>
-                            <div class="media-content">
-                                <div class="content">
-                                    <p>
-                                        <span class="title">{{ city_weather.city }}</span>
-                                        <br>
-                                        <span class="subtitle">{{ city_weather.temperature }}° F</span>
-                                        <br> {{ city_weather.description }}
-                                    </p>
-                                </div>
-                            </div>
-                        </article>
+    </nav>
+<main>
+    <section class="container row">
+        <div class="col s12 m8 offset-m2">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <!-- <div class="control is-expanded">
+                        {{ form.name }}
+                    </div> -->
+                    <div class="input-field col s12 m10">
+                        {{ form.name }}
+                      <label for="id_name">City</label>
                     </div>
-                    {% endfor %}
+                    <div class="input-field col s12 m2 center">
+                        <button type="submit" class="btn">
+                            ADD
+                        </button>
+                    </div>
                 </div>
+            </form>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="row">
+            <div class="col s12 m8 offset-m2 l6 offset-l3">
+            {% for city_weather in weather_data %}
+                <div class="card-panel grey lighten-5 z-depth-1">
+                  <div class="row valign-wrapper">
+                    <div class="col s2">
+                      <img src="http://openweathermap.org/img/w/{{ city_weather.icon }}.png" alt="icon_weather" class="responsive-img">
+                    </div>
+                    <div class="col s10">
+                        <span class="black-text">{{ city_weather.city }}</span>
+                        <br>
+                        <span class="black-text">{{ city_weather.temperature }}° C</span>
+                        <br>
+                        <span class="black-text">{{ city_weather.description }}</span>
+                    </div>
+                  </div>
+                </div>
+            {% endfor %}
             </div>
         </div>
     </section>
-    <footer class="footer">
+
+
+</main>
+    <footer class="container row center">
+        <!-- <div class="col s4">
+            <a class="blue-text" href="https://www.facebook.com/FredPaucarEspinoza" target="_blank">
+                <i class="fab fa-facebook"></i> FredPaucar
+            </a>
+        </div> -->
+        <div class="col s4 offset-s4">
+            <a class="grey-text" href="https://github.com/fredpaes" target="_blank">
+                <i class="fab fa-github"></i> @fredpaes
+            </a>
+        </div>
+        <!-- <div class="col s4">
+            <a class="green-text" href="https://api.whatsapp.com/send?phone=51965300377" target="_blank">
+                <i class="fab fa-whatsapp"></i> Call me
+            </a>
+        </div> -->
     </footer>
 </body>
+<style>
+    nav {
+        background-color: #26a69a;
+    }
+    body {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+    main {
+        flex: 1 0 auto;
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    M.AutoInit();
+</script>
 
 </html>
